@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Photo;
 use Illuminate\Http\Request;
+use Image;
 
 class PhotoController extends Controller
 {
@@ -14,7 +15,7 @@ class PhotoController extends Controller
      */
     public function index()
     {
-        //
+        return view('photos.index');
     }
 
     /**
@@ -24,7 +25,7 @@ class PhotoController extends Controller
      */
     public function create()
     {
-        //
+        return view('photos.create');
     }
 
     /**
@@ -35,7 +36,30 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'photo' => 'required',
+            'text' => 'required',
+        ]);
+
+        if($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+
+            $filename = time() . '.' . $photo->getClientOriginalExtension();
+            $img = Image::make($photo)->save(public_path('/uploads/' . $filename));
+
+            $medium = 'medium_' . time() . '.' . $photo->getClientOriginalExtension();
+            $img = Image::make($photo)->fit(600, 360)->save(public_path('/uploads/' . $medium));
+
+            $thumbnail = 'thumbnail_' . time() . '.' . $photo->getClientOriginalExtension();
+            $img = Image::make($photo)->fit(150)->save(public_path('/uploads/' . $thumbnail));
+
+            // $img->title = $filename;
+        }
+
+        $img->save();
+
+        return redirect()->route('photos.index')
+            ->with('success','Photo created successfully.');
     }
 
     /**
