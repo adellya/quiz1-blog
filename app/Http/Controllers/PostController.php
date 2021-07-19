@@ -58,6 +58,7 @@ class PostController extends Controller
             'title' => $request->title,
             'slug'  => Str::slug($request->title),
             'text'  => $request->text,
+            'category_id'  => $request->category,
         ]);
 
         return redirect()->route('posts.index')

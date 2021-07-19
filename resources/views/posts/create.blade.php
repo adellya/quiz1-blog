@@ -40,7 +40,7 @@
             <select name="category" id="category"class="custom-select @error('category_id') is-invalid @enderror" required>
                 <option>--Choose one--</option>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}"> {{ $category->name }} </option>
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
         </div>
