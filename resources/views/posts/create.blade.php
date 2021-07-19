@@ -31,12 +31,12 @@
         @csrf
 
         <div class="form-group">
-            <label for="title">Title</label>
+            <label for="title">Title *</label>
             <input type="text" name="title" id="title" class="form-control form-control-lg">
         </div>
 
         <div class="form-group">
-            <label for="category">Category</label>
+            <label for="category">Category *</label>
             <select name="category" id="category"class="custom-select @error('category_id') is-invalid @enderror" required>
                 <option>--Choose one--</option>
                 @foreach ($categories as $category)
